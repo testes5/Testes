@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tiger Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Roboto:wght@300;400&family=Roboto+Mono&display=swap" rel="stylesheet">
+
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      min-height: 100vh;
+      background: #0a0015;
+      overflow-x: hidden;
+      font-family: 'Orbitron', sans-serif;
+      color: #d0c0ff;
+      position: relative;
+    }
+
+    .site-logo {
+      width: 120px;
+      margin-bottom: 10px;
+      filter: drop-shadow(0 0 15px #c300ff);
+    }
+
+    .space-bg {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 20% 30%, rgba(160,0,120,0.07) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 70%, rgba(100,0,200,0.09) 0%, transparent 60%);
+      z-index: 1;
+      opacity: 0;
+      animation: fadeIn 3s ease-out forwards;
+    }
+
+    .glow {
+      position: absolute;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(160,32,240,0.14) 10%, transparent 65%);
+      border-radius: 50%;
+      top: 15%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 3;
+      opacity: 0;
+      animation: fadeIn 3s ease-out forwards 0.4s, pulseGlow 15s ease-in-out infinite alternate;
+    }
+
+    @keyframes fadeIn { to { opacity: 1; } }
+
+    @keyframes pulseGlow {
+      from { opacity: 0.4; transform: translate(-50%, -50%) scale(0.95); }
+      to { opacity: 0.8; transform: translate(-50%, -50%) scale(1.35); }
+    }
+
+    .content-wrapper {
+      opacity: 0;
+      transform: translateY(70px);
+      animation: contentEntrance 2.8s ease-out forwards;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 5;
+      position: relative;
+    }
+
+    @keyframes contentEntrance { to { opacity: 1; transform: translateY(0); } }
+
+    .header { width: 100%; padding: 40px 20px 20px; text-align: center; }
+
+    .logo {
+      font-size: clamp(2.2rem, 7vw, 3.5rem);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      background: linear-gradient(90deg, #c300ff, #a020f0, #ff00cc);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 12px #c300ff70, 0 0 25px #a020f0aa;
+    }
+
+    .description {
+      margin-top: 20px;
+      font-family: 'Roboto', sans-serif;
+      font-size: clamp(1rem, 4vw, 1.3rem);
+      font-weight: 300;
+      color: #c0b0ff;
+      text-align: center;
+      max-width: 800px;
+      line-height: 1.5;
+      text-shadow: 0 0 8px rgba(160,32,240,0.4);
+      margin-bottom: 60px;
+    }
+
+    .categories-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      max-width: 1200px;
+      padding: 0 20px;
+    }
+
+    .card {
+      width: 280px;
+      min-height: 240px;
+      background: rgba(25,8,45,0.65);
+      border: 1px solid rgba(160,32,240,0.45);
+      border-radius: 24px;
+      backdrop-filter: blur(10px);
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: 0 0 30px rgba(160,32,240,0.3);
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 0 45px rgba(195,0,255,0.55);
+      border-color: #c300ff;
+    }
+
+    .card-title {
+      font-size: clamp(1.3rem, 4vw, 1.6rem);
+      font-weight: 700;
+      color: #ffddff;
+      text-shadow: 0 0 12px #c300ff, 0 0 20px #a020f0;
+      margin-bottom: 12px;
+    }
+
+    .card-loadstring {
+      font-family: 'Roboto Mono', monospace;
+      font-size: clamp(0.9rem, 3vw, 1.0rem);
+      color: #e0c0ff;
+      text-shadow: 0 0 8px rgba(195,0,255,0.5);
+      word-break: break-all;
+      line-height: 1.4;
+      margin-bottom: 20px;
+    }
+
+    .copy-btn {
+      background: linear-gradient(135deg, #8e44ad, #9b59ff);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .copy-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 20px rgba(155,89,255,0.7);
+    }
+
+    .upcoming-text {
+      margin-top: 40px;
+      margin-bottom: 60px;
+      font-size: clamp(1.4rem, 5vw, 2rem);
+      font-weight: 700;
+      color: #ff99ff;
+      text-shadow: 0 0 15px #ff00cc, 0 0 30px #c300ff;
+      text-align: center;
+      letter-spacing: 0.05em;
+      width: 100%;
+      max-width: 600px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="space-bg"></div>
+  <div class="glow"></div>
+
+  <div class="content-wrapper">
+    <div class="header">
+      <!-- LOGO AQUI -->
+      <img src="logo.png" alt="Logo Tiger Hub" class="site-logo">
+      <h1 class="logo">Tiger Hub</h1>
+    </div>
+
+    <div class="description">
+      Nosso site Dos scripts!! Todos os scripts que nos fizemos Esta Nesse site OFICIAL DO tiger hub!!<br>
+      Desça um pouco pra baixo e ira ver as categorias dos scripts!!
+    </div>
+
+    <div class="categories-container">
+
+      <div class="card">
+        <div class="card-title">FPS DEVOURER<br>TIGE'R HUB</div>
+        <div class="card-loadstring" id="script1">
+          loadstring(game:HttpGet("https://pastefy.app/eHwxcO3x/raw"))()
+        </div>
+        <button class="copy-btn" onclick="copyScript('script1')">Copiar Script</button>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Blox Fruits Tiger hub</div>
+        <div class="card-loadstring" id="script2">
+          loadstring(game:HttpGet("https://raw.githubusercontent.com/TIGERHUBOFC/Tigerhub/refs/heads/main/.luaU"))()
+        </div>
+        <button class="copy-btn" onclick="copyScript('script2')">Copiar Script</button>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Tsunami for Brainrot Tiger hub</div>
+        <div class="card-loadstring" id="script3">
+          loadstring(game:HttpGet("https://pastefy.app/EO1WOk7b/raw"))()
+        </div>
+        <button class="copy-btn" onclick="copyScript('script3')">Copiar Script</button>
+      </div>
+
+    </div>
+
+    <div class="upcoming-text">
+      Novos scripts em Breve!!
+    </div>
+  </div>
+
+  <script>
+    function copyScript(id) {
+      const text = document.getElementById(id).innerText;
+      navigator.clipboard.writeText(text);
+      alert("Script copiado!");
+    }
+  </script>
+
+</body>
+</html>
